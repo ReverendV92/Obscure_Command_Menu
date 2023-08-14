@@ -589,6 +589,24 @@ hook.Add( "PopulateToolMenu", "vntObscureCommandMenu", function()
 		Panel:ControlHelp( "physgun_limited\nIf enabled, the Physics Gun will not be able to pick up certain map entities." )
 
 		Panel:AddControl( "Slider", {
+			["label"] = "Time to Arrive",
+			["Command"] = "physgun_timetoarrive",	
+			["Type"] = "float",
+			["min"] = "0",
+			["max"] = "1"
+		}	)
+		Panel:ControlHelp( "physgun_timetoarrive\nHow long it takes objects to arrive at your current view angle when held. Default 0.05" )
+
+		Panel:AddControl( "Slider", {
+			["label"] = "Ragdoll Time to Arrive",
+			["Command"] = "physgun_timetoarriveragdoll",	
+			["Type"] = "float",
+			["min"] = "0", 	
+			["max"] = "1"
+		}	)
+		Panel:ControlHelp( "physgun_timetoarriveragdoll\nHow long it takes ragdolls to arrive at your current view angle when held. Default 0.1" )
+
+		Panel:AddControl( "Slider", {
 			["label"] = "Scroll Sensitivity",
 			["Command"] = "physgun_wheelspeed",	
 			["Type"] = "int",
@@ -1113,9 +1131,94 @@ hook.Add( "PopulateToolMenu", "vntObscureCommandMenu", function()
 
 	end )
 
+	spawnmenu.AddToolMenuOption( "Options" , "OCM" , "vntOCM_Player_Camera" , "Player: Camera" , "" , "" , function( Panel )
+
+		Panel:Help( "Player camera controls." )
+		Panel:Button( "First Person" , "firstperson" )
+		Panel:ControlHelp( "firstperson\nSwitch to firstperson camera." )
+		Panel:Button( "Third Person" , "thirdperson" )
+		Panel:ControlHelp( "thirdperson\nSwitch to thirdperson camera." )
+		Panel:Button( "Third Person (Maya Mode)" , "thirdperson_mayamode" )
+		Panel:ControlHelp( "thirdperson_mayamode\nSwitch to thirdperson Maya-like camera controls." )
+		Panel:CheckBox( "Third Person (Platformer)" , "thirdperson_platformer" )
+		Panel:ControlHelp( "thirdperson_platformer\nPlayer will aim in the direction they are moving." )
+		Panel:CheckBox( "Third Person (Screen Space)" , "thirdperson_screenspace" )
+		Panel:ControlHelp( "thirdperson_screenspace\nMovement will be relative to the camera, eg: left means screen-left." )
+
+		Panel:CheckBox( "Camera Collision" , "cam_collision" )
+		Panel:ControlHelp( "cam_collision\n - When in thirdperson and cam_collision is set to 1, an attempt is made to keep the camera from passing though walls." )
+
+		Panel:AddControl( "Slider", {
+			["label"] = "Camera Delta",
+			["Command"] = "cam_idealdelta",	
+			["Type"] = "float",
+			["min"] = "0", 	
+			["max"] = "10"
+		}	)
+		Panel:ControlHelp( "cam_idealdelta\nControls the speed when matching offset to ideal angles in thirdperson view." )
+
+		Panel:AddControl( "Slider", {
+			["label"] = "Camera Distance X",
+			["Command"] = "cam_idealdist",	
+			["Type"] = "int",
+			["min"] = "30", 	
+			["max"] = "255"
+		}	)
+		Panel:ControlHelp( "cam_idealdist\nControls the camera forward/back distance in thirdperson view." )
+
+		Panel:AddControl( "Slider", {
+			["label"] = "Camera Distance Y",
+			["Command"] = "cam_idealdistright",	
+			["Type"] = "int",
+			["min"] = "-255", 	
+			["max"] = "255"
+		}	)
+		Panel:ControlHelp( "cam_idealdistright\nControls the camera left/right distance in thirdperson view." )
+
+		Panel:AddControl( "Slider", {
+			["label"] = "Camera Distance Z",
+			["Command"] = "cam_idealdistup",	
+			["Type"] = "int",
+			["min"] = "-255", 	
+			["max"] = "255"
+		}	)
+		Panel:ControlHelp( "cam_idealdistup\nControls the camera up/down distance in thirdperson view." )
+
+		Panel:AddControl( "Slider", {
+			["label"] = "Camera Lag",
+			["Command"] = "cam_ideallag",	
+			["Type"] = "float",
+			["min"] = "0", 	
+			["max"] = "32"
+		}	)
+		Panel:ControlHelp( "cam_ideallag\nAmount of lag used when matching offset to ideal angles in thirdperson view." )
+
+		Panel:AddControl( "Slider", {
+			["label"] = "Camera Pitch",
+			["Command"] = "cam_idealpitch",	
+			["Type"] = "int",
+			["min"] = "-180", 	
+			["max"] = "180"
+		}	)
+		Panel:ControlHelp( "cam_idealpitch\nControls the camera pitch in thirdperson view." )
+
+		Panel:AddControl( "Slider", {
+			["label"] = "Camera Yaw",
+			["Command"] = "cam_idealyaw",	
+			["Type"] = "int",
+			["min"] = "-180", 	
+			["max"] = "180"
+		}	)
+		Panel:ControlHelp( "cam_idealpitch\nControls the camera yaw in thirdperson view." )
+
+	end )
+
 	spawnmenu.AddToolMenuOption( "Options" , "OCM" , "vntOCM_Player_Viewmodel" , "Player: View Model" , "" , "" , function( Panel )
 
 		Panel:Help( "Options that affect the player first-person view." )
+
+		Panel:CheckBox( "Use World Model for First-Person" , "cl_first_person_uses_world_model" , { } )
+		Panel:ControlHelp( "cl_first_person_uses_world_model\nCauses the third person model to be drawn instead of the view model." )
 
 		Panel:CheckBox( "Draw View Model" , "r_drawviewmodel" , { } )
 		Panel:ControlHelp( "r_drawviewmodel\nToggle rendering of view models." )
